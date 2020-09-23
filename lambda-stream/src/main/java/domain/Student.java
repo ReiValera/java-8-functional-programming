@@ -10,8 +10,12 @@ import java.util.List;
 public class Student {
 
     private int age;
-
     private List<String> grades;
+    private Name name;
+    @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "dd-MM-yyyy hh:mm:ss")
+    private Date dateOfRegistration;
 
     public Student() {
     }
@@ -20,12 +24,6 @@ public class Student {
         this.age = age;
         this.name = name;
     }
-
-    @JsonFormat(
-            shape = JsonFormat.Shape.STRING,
-            pattern = "dd-MM-yyyy hh:mm:ss")
-    private Date dateOfRegistration;
-    private Name name;
 
     public Date getDateOfRegistration() {
         return dateOfRegistration;

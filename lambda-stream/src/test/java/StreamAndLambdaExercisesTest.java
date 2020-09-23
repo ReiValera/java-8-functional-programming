@@ -34,8 +34,8 @@ public class StreamAndLambdaExercisesTest {
          * Second try using Stream API
          **/
 
-        assertEquals(matchedStudents.size(), 1);
-        assertEquals(matchedStudents.get(0).getName().getFirstName(), "Jack");
+        assertEquals(1, matchedStudents.size());
+        assertEquals("Jack", matchedStudents.get(0).getName().getFirstName());
     }
 
     @Test
@@ -46,9 +46,9 @@ public class StreamAndLambdaExercisesTest {
          * Collect the sorted List into sortedStudents
          **/
 
-        assertEquals(sortedStudents.get(0).getName().getFirstName(), "Jack");
-        assertEquals(sortedStudents.get(1).getName().getFirstName(), "James");
-        assertEquals(sortedStudents.get(2).getName().getFirstName(), "Ken");
+        assertEquals("Jack", sortedStudents.get(0).getName().getFirstName());
+        assertEquals("James", sortedStudents.get(1).getName().getFirstName());
+        assertEquals("Ken", sortedStudents.get(2).getName().getFirstName());
     }
 
     @Test
@@ -59,9 +59,9 @@ public class StreamAndLambdaExercisesTest {
          * Collect the sorted List into sortedStudentsStartingWithJ
          **/
 
-        assertEquals(sortedStudentsStartingWithJ.size(), 2);
-        assertEquals(sortedStudentsStartingWithJ.get(0).getName().getFirstName(), "Jack");
-        assertEquals(sortedStudentsStartingWithJ.get(1).getName().getFirstName(), "James");
+        assertEquals(2, sortedStudentsStartingWithJ.size());
+        assertEquals("Jack", sortedStudentsStartingWithJ.get(0).getName().getFirstName());
+        assertEquals("James", sortedStudentsStartingWithJ.get(1).getName().getFirstName());
     }
 
     @Test
