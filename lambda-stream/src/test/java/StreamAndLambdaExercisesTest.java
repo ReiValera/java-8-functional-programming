@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +35,13 @@ public class StreamAndLambdaExercisesTest {
          * Second try using Stream API
          **/
 
+        /**
+         * Stream API solution
+         */
+        matchedStudents = students.stream()
+                .filter(student -> student.getAge() > 20)
+                .collect(Collectors.toList());
+
         assertEquals(1, matchedStudents.size());
         assertEquals("Jack", matchedStudents.get(0).getName().getFirstName());
     }
@@ -45,6 +53,13 @@ public class StreamAndLambdaExercisesTest {
          * TODO: Sort (using Stream and a chain of stream operations) the students List based on the fistName of the Student.
          * Collect the sorted List into sortedStudents
          **/
+
+        /**
+         * Solution
+         */
+        sortedStudents = students.stream()
+                .sorted(Comparator.comparing(student -> student.getName().getFirstName()))
+                .collect(Collectors.toList());
 
         assertEquals("Jack", sortedStudents.get(0).getName().getFirstName());
         assertEquals("James", sortedStudents.get(1).getName().getFirstName());
@@ -58,6 +73,14 @@ public class StreamAndLambdaExercisesTest {
          * TODO: Sort (using Stream and a chain of stream operations) the students whose name starts with the letter "J" based on the fistName of the Student.
          * Collect the sorted List into sortedStudentsStartingWithJ
          **/
+
+        /**
+         * Solution
+         */
+        sortedStudentsStartingWithJ = students.stream()
+                .filter(student -> student.getName().getFirstName().startsWith("J"))
+                .sorted(Comparator.comparing(student -> student.getName().getFirstName()))
+                .collect(Collectors.toList());
 
         assertEquals(2, sortedStudentsStartingWithJ.size());
         assertEquals("Jack", sortedStudentsStartingWithJ.get(0).getName().getFirstName());
@@ -74,6 +97,13 @@ public class StreamAndLambdaExercisesTest {
                 .sorted(Comparator.comparing(student -> student.getName().getFirstName()))
                 .filter(student -> student.getName().getFirstName().startsWith("J"))
                 .findFirst();
+
+        /**
+         * Solution
+         */
+        assertEquals(22, firstStudentWithJ.get().getAge());
+        assertEquals("Jack", firstStudentWithJ.get().getName().getFirstName());
+        assertEquals("Son", firstStudentWithJ.get().getName().getLastName());
 
     }
 

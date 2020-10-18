@@ -1,8 +1,12 @@
 package utils;
 
 import domain.Student;
+import domain.Subject;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class StudentUtils {
 
@@ -18,7 +22,10 @@ public class StudentUtils {
      * @return a List of students based on a gender
      */
     public static List<Student> getStudentsWithGender(List<Student> students, String gender) {
-        return null;
+
+        return students.stream()
+                .filter(student -> gender.equalsIgnoreCase(student.getDemographics().getGender()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -29,7 +36,10 @@ public class StudentUtils {
      * @return a List of students with degreeTitle and degreeType
      */
     public static List<Student> getStudentWithDegreeTitleAndType(List<Student> students, String degreeTitle, String degreeType) {
-        return null;
+        return students.stream()
+                .filter(student -> degreeTitle.equalsIgnoreCase(student.getDegree().getCourseTitle()))
+                .filter(student -> degreeType.equalsIgnoreCase(student.getDegree().getType()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -45,7 +55,13 @@ public class StudentUtils {
      * @return a List of all passing students
      */
     public static List<Student> getAllPassingStudents(List<Student> students) {
-        return null;
+
+        return students.stream()
+                .filter(student -> student.getSubjects()
+                        .stream()
+                        .mapToInt(Subject::getGrade)
+                        .sum() / 8 > 40)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -60,7 +76,22 @@ public class StudentUtils {
      */
     public static Student getStudentWithHighestGrade(List<Student> students) {
 
-        return null;
+        Optional<Integer> highestGrade = students.stream()
+                .map(student -> student.getSubjects()
+                        .stream()
+                        .mapToInt(Subject::getGrade)
+                        .sum() / 8)
+                .max(Integer::compareTo);
+
+        Predicate<Student> getStudentGrade = (Student student) -> student.getSubjects()
+                .stream()
+                .mapToInt(Subject::getGrade)
+                .sum() / 8 == highestGrade.get();
+
+        return students.stream()
+                .filter(getStudentGrade)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -76,6 +107,9 @@ public class StudentUtils {
      */
     public static Student bestStudentForDegreeBasedOnGender(List<Student> students, String degreeTitle, String degreeType, String gender) {
 
-        return null;
+        List<Student> studentsBasedOnDegree = getStudentWithDegreeTitleAndType(students, degreeTitle, degreeType);
+        List<Student> studentsBasedOnGenderForDegree = getStudentsWithGender(studentsBasedOnDegree, gender);
+
+        return getStudentWithHighestGrade(studentsBasedOnGenderForDegree);
     }
 }

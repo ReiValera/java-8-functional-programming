@@ -1,10 +1,12 @@
 package utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.Student;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +23,7 @@ public class StudentUtilsTest {
     @Before
     public void setUp() throws IOException {
        // TODO using ObjectMapper read the file students.json and Deserialize it to a List of Student Object. Assign the result to the variable students
+        students = mapper.readValue(new File(JSON_PATH), new TypeReference<List<Student>>() {});
     }
 
     @Test
